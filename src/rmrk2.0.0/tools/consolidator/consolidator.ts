@@ -1043,119 +1043,87 @@ export class Consolidator {
   public async consolidate(rmrks?: Remark[]): Promise<ConsolidatorReturnType> {
     const remarks = rmrks || [];
     // console.log(remarks);
-    for (const remark of remarks) {
+    for (let x = 0; x < remarks.length; x++) {
+      const remark = remarks[x]
       // console.log('==============================');
-      // console.log('Remark is: ' + remark.remark);
+      console.log(`block ${remark.block}, rmrk (${x}/${remarks.length}: ${remark.remark}`);
+
+      await this.dbAdapter.beforeProcessingRemark(remark)
+
       switch (remark.interaction_type) {
         case OP_TYPES.CREATE:
-          if (await this.create(remark)) {
-            continue;
-          }
+          await this.create(remark);
           break;
 
         case OP_TYPES.DESTROY:
-          if (await this.destroy(remark)) {
-            continue;
-          }
+          await this.destroy(remark);
           break;
 
         case OP_TYPES.LOCK:
-          if (await this.lock(remark)) {
-            continue;
-          }
+          await this.lock(remark);
           break;
 
         case OP_TYPES.MINT:
-          if (await this.mint(remark)) {
-            continue;
-          }
+          await this.mint(remark);
           break;
 
         case OP_TYPES.SEND:
-          if (await this.send(remark)) {
-            continue;
-          }
+          await this.send(remark);
           break;
 
         case OP_TYPES.BUY:
           // An NFT was bought after being LISTed
-          if (await this.buy(remark)) {
-            continue;
-          }
+          await this.buy(remark);
           break;
 
         case OP_TYPES.BURN:
           // An NFT was burned
-          if (await this.burn(remark)) {
-            continue;
-          }
+          await this.burn(remark);
           break;
 
         case OP_TYPES.LIST:
           // An NFT was listed for sale
-          if (await this.list(remark)) {
-            continue;
-          }
+          await this.list(remark);
           break;
 
         case OP_TYPES.EMOTE:
-          if (await this.emote(remark)) {
-            continue;
-          }
+          await this.emote(remark);
           break;
 
         case OP_TYPES.CHANGEISSUER:
-          if (await this.changeIssuer(remark)) {
-            continue;
-          }
+          await this.changeIssuer(remark);
           break;
 
         case OP_TYPES.BASE:
-          if (await this.base(remark)) {
-            continue;
-          }
+          await this.base(remark);
           break;
 
         case OP_TYPES.EQUIPPABLE:
-          if (await this.equippable(remark)) {
-            continue;
-          }
+          await this.equippable(remark);
           break;
 
         case OP_TYPES.RESADD:
-          if (await this.resadd(remark)) {
-            continue;
-          }
+          await this.resadd(remark);
           break;
 
         case OP_TYPES.ACCEPT:
-          if (await this.accept(remark)) {
-            continue;
-          }
+          await this.accept(remark);
           break;
 
         case OP_TYPES.EQUIP:
-          if (await this.equip(remark)) {
-            continue;
-          }
+          await this.equip(remark);
           break;
 
         case OP_TYPES.SETPRIORITY:
-          if (await this.setpriority(remark)) {
-            continue;
-          }
+          await this.setpriority(remark);
           break;
 
         case OP_TYPES.SETPROPERTY:
-          if (await this.setproperty(remark)) {
-            continue;
-          }
+          await this.setproperty(remark);
           break;
 
         case OP_TYPES.THEMEADD:
-          if (await this.themeadd(remark)) {
-            continue;
-          }
+          await this.themeadd(remark);
           break;
 
         default:
@@ -1164,6 +1132,8 @@ export class Consolidator {
               remark.interaction_type
           );
       }
+
+      await this.dbAdapter.afterProcessingRemark(remark)
     }
     // deeplog(this.nfts);
     // deeplog(this.collections);

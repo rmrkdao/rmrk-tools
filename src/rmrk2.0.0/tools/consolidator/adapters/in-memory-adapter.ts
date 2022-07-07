@@ -8,6 +8,7 @@ import { NFT } from "../../../classes/nft";
 import { IConsolidatorAdapter } from "./types";
 import { Base } from "../../../classes/base";
 import { AcceptEntityType } from "../../../classes/accept";
+import { Remark } from "../remark";
 
 export class InMemoryAdapter implements IConsolidatorAdapter {
   public nfts: Record<string, NFTConsolidated>;
@@ -17,6 +18,14 @@ export class InMemoryAdapter implements IConsolidatorAdapter {
     this.nfts = {};
     this.collections = {};
     this.bases = {};
+  }
+
+  public async beforeProcessingRemark(remark: Remark): Promise<any> {
+      
+  }
+
+  public async afterProcessingRemark(remark: Remark): Promise<any> {
+      
   }
 
   public async getAllNFTs() {

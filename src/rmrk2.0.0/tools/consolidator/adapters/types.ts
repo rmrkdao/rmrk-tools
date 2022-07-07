@@ -7,8 +7,14 @@ import {
 } from "../consolidator";
 import { Base } from "../../../classes/base";
 import { AcceptEntityType } from "../../../classes/accept";
+import { Remark } from "../remark";
 
 export interface IConsolidatorAdapter {
+
+  /** Hook for getting the next remark to be processed right before it is about to be processed */
+  beforeProcessingRemark(remark: Remark): Promise<any>;
+  /** Hook for getting the last remark to be processed right after it has been processed */
+  afterProcessingRemark(remark: Remark): Promise<any>;
   updateNFTEmote(nft: NFT, consolidatedNFT: NFTConsolidated): Promise<any>;
   updateNFTList(nft: NFT, consolidatedNFT: NFTConsolidated): Promise<any>;
   updateNftResadd(nft: NFT, consolidatedNFT: NFTConsolidated): Promise<any>;
