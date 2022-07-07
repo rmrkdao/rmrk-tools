@@ -125,7 +125,8 @@ export const getRemarksFromBlocks = (
 ): Remark[] => {
   const remarks: Remark[] = [];
   for (const row of blocks) {
-    for (const call of row.calls) {
+    for (let offset = 0; offset < row.calls.length; offset++) {
+      const call = row.calls[offset]
       if (call.call !== "system.remark") continue;
       const str = hexToString(call.value);
       const isValid = validateDecode(str);
@@ -157,6 +158,7 @@ export const getRemarksFromBlocks = (
 
       const r: Remark = {
         block: row.block,
+        offset,
         caller: encodeAddress(call.caller, ss58Format),
         interaction_type: meta.type,
         version: meta.version,
