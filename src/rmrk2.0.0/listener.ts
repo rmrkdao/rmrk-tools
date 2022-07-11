@@ -22,7 +22,7 @@ interface IProps {
   prefixes?: string[];
   initialBlockCalls?: BlockCalls[];
   initialRemarksUrl?: string;
-  consolidateFunction: (remarks: Remark[]) => Promise<ConsolidatorReturnType>;
+  consolidateFunction: (remarks: Remark[]) => Promise<void>;
   storageProvider?: IStorageProvider;
   storageKey?: string;
   loggerEnabled?: boolean;
@@ -89,7 +89,7 @@ export class RemarkListener {
   public storageProvider: IStorageProvider;
   private consolidateFunction: (
     remarks: Remark[]
-  ) => Promise<ConsolidatorReturnType>;
+  ) => Promise<void>;
 
   constructor({
     polkadotApi,

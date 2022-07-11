@@ -1040,13 +1040,13 @@ export class Consolidator {
     return false;
   }
 
-  public async consolidate(rmrks?: Remark[]): Promise<ConsolidatorReturnType> {
+  public async consolidate(rmrks?: Remark[]) {
     const remarks = rmrks || [];
     // console.log(remarks);
     for (let x = 0; x < remarks.length; x++) {
       const remark = remarks[x]
       // console.log('==============================');
-      console.log(`block ${remark.block}, rmrk (${x}/${remarks.length}: ${remark.remark}`);
+      console.log(`block ${new Intl.NumberFormat("en-US", {style: "decimal"}).format(remark.block)}, rmrk (${x + 1}/${remarks.length}): ${remark.remark}`);
 
       await this.dbAdapter.beforeProcessingRemark(remark)
 
@@ -1143,6 +1143,9 @@ export class Consolidator {
     //   `${this.nfts.length} NFTs across ${this.collections.length} collections.`
     // );
     // console.log(`${this.invalidCalls.length} invalid calls.`);
+  }
+
+  public async getResults() {
     const result: ConsolidatorReturnType = {
       nfts: this.dbAdapter.getAllNFTs ? await this.dbAdapter.getAllNFTs() : {},
       collections: this.dbAdapter.getAllCollections

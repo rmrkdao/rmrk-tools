@@ -77,7 +77,8 @@ const consolidate = async () => {
   const remarks = getRemarks(rawdata, prefixes, collectionFilter, ss58Format);
   const con = new Consolidator(ss58Format);
 
-  const ret = await con.consolidate(remarks);
+  await con.consolidate(remarks);
+  const ret = await con.getResults()
 
   //@ts-ignore
   BigInt.prototype.toJSON = function () {

@@ -30,7 +30,7 @@ class StorageProvider implements IStorageProvider {
 const runListener = async () => {
   const api = await getApi("wss://kusama-rpc.polkadot.io");
   const consolidateFunction = async (remarks: Remark[]) => {
-    const consolidator = new Consolidator();
+    const consolidator = new Consolidator(); // FIX: What is the point of creating a consolidation from one block? This is happening due to the InMemoryAdapter not being reused
     return await consolidator.consolidate(remarks);
   };
   const latestBlock = await getLatestFinalizedBlock(api);
