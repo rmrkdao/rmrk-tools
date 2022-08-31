@@ -10,6 +10,7 @@ export default {
     file: "./dist/index.es.js",
     format: "es",
     sourcemap: true,
+    // inlineDynamicImports: true,
   },
   plugins: [
     babel({

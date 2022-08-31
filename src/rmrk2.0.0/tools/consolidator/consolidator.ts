@@ -27,7 +27,7 @@ import { ChangeIssuer } from "../../classes/changeissuer";
 import { getChangeIssuerEntity } from "./interactions/changeIssuer";
 import { validateMintNFT } from "./interactions/mint";
 import { InMemoryAdapter } from "./adapters/in-memory-adapter";
-import { IConsolidatorAdapter } from "./adapters/types";
+import { IConsolidatorAdapter, IRmrkExtensionHandler } from "./adapters/types";
 import {
   changeIssuerBase,
   changeIssuerCollection,
@@ -167,6 +167,7 @@ export class Consolidator {
   readonly emitEmoteChanges?: boolean;
   readonly emitInteractionChanges?: boolean;
   private interactionChanges: InteractionChanges = [];
+  private extensionHandler?: IRmrkExtensionHandler;
 
   /**
    * @param ss58Format
@@ -178,7 +179,8 @@ export class Consolidator {
     ss58Format = 2,
     dbAdapter?: IConsolidatorAdapter,
     emitEmoteChanges?: boolean,
-    emitInteractionChanges?: boolean
+    emitInteractionChanges?: boolean,
+    extensionHandler?: IRmrkExtensionHandler 
   ) {
     if (ss58Format) {
       this.ss58Format = ss58Format;
@@ -192,6 +194,7 @@ export class Consolidator {
     this.collections = [];
     this.nfts = [];
     this.bases = [];
+    this.extensionHandler = extensionHandler;
   }
 
   private updateInvalidCalls(op_type: OP_TYPES, remark: Remark) {
@@ -1050,87 +1053,90 @@ export class Consolidator {
 
       await this.dbAdapter.beforeProcessingRemark(remark)
 
-      switch (remark.interaction_type) {
-        case OP_TYPES.CREATE:
-          await this.create(remark);
-          break;
+      if (this.extensionHandler && this.extensionHandler.prefix.toLowerCase() === remark.remark.split("::")?.[0].toLowerCase()) {
+        await this.extensionHandler.processRemark(remark)
+      } else {
+        switch (remark.interaction_type) {
+          case OP_TYPES.CREATE:
+            await this.create(remark);
+            break;
 
-        case OP_TYPES.DESTROY:
-          await this.destroy(remark);
-          break;
+          case OP_TYPES.DESTROY:
+            await this.destroy(remark);
+            break;
 
-        case OP_TYPES.LOCK:
-          await this.lock(remark);
-          break;
+          case OP_TYPES.LOCK:
+            await this.lock(remark);
+            break;
 
-        case OP_TYPES.MINT:
-          await this.mint(remark);
-          break;
+          case OP_TYPES.MINT:
+            await this.mint(remark);
+            break;
 
-        case OP_TYPES.SEND:
-          await this.send(remark);
-          break;
+          case OP_TYPES.SEND:
+            await this.send(remark);
+            break;
 
-        case OP_TYPES.BUY:
-          // An NFT was bought after being LISTed
-          await this.buy(remark);
-          break;
+          case OP_TYPES.BUY:
+            // An NFT was bought after being LISTed
+            await this.buy(remark);
+            break;
 
-        case OP_TYPES.BURN:
-          // An NFT was burned
-          await this.burn(remark);
-          break;
+          case OP_TYPES.BURN:
+            // An NFT was burned
+            await this.burn(remark);
+            break;
 
-        case OP_TYPES.LIST:
-          // An NFT was listed for sale
-          await this.list(remark);
-          break;
+          case OP_TYPES.LIST:
+            // An NFT was listed for sale
+            await this.list(remark);
+            break;
 
-        case OP_TYPES.EMOTE:
-          await this.emote(remark);
-          break;
+          case OP_TYPES.EMOTE:
+            await this.emote(remark);
+            break;
 
-        case OP_TYPES.CHANGEISSUER:
-          await this.changeIssuer(remark);
-          break;
+          case OP_TYPES.CHANGEISSUER:
+            await this.changeIssuer(remark);
+            break;
 
-        case OP_TYPES.BASE:
-          await this.base(remark);
-          break;
+          case OP_TYPES.BASE:
+            await this.base(remark);
+            break;
 
-        case OP_TYPES.EQUIPPABLE:
-          await this.equippable(remark);
-          break;
+          case OP_TYPES.EQUIPPABLE:
+            await this.equippable(remark);
+            break;
 
-        case OP_TYPES.RESADD:
-          await this.resadd(remark);
-          break;
+          case OP_TYPES.RESADD:
+            await this.resadd(remark);
+            break;
 
-        case OP_TYPES.ACCEPT:
-          await this.accept(remark);
-          break;
+          case OP_TYPES.ACCEPT:
+            await this.accept(remark);
+            break;
 
-        case OP_TYPES.EQUIP:
-          await this.equip(remark);
-          break;
+          case OP_TYPES.EQUIP:
+            await this.equip(remark);
+            break;
 
-        case OP_TYPES.SETPRIORITY:
-          await this.setpriority(remark);
-          break;
+          case OP_TYPES.SETPRIORITY:
+            await this.setpriority(remark);
+            break;
 
-        case OP_TYPES.SETPROPERTY:
-          await this.setproperty(remark);
-          break;
+          case OP_TYPES.SETPROPERTY:
+            await this.setproperty(remark);
+            break;
 
-        case OP_TYPES.THEMEADD:
-          await this.themeadd(remark);
-          break;
+          case OP_TYPES.THEMEADD:
+            await this.themeadd(remark);
+            break;
 
-        default:
-          console.error(
-            "Unable to process this remark - wrong type: " +
-              remark.interaction_type
-          );
+          default:
+            console.error(
+              `Unable to process this remark - wrong type: ${remark.interaction_type}`
+            );
+        }
       }
 
       await this.dbAdapter.afterProcessingRemark(remark)

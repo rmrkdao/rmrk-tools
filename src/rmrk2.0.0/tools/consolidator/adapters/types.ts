@@ -65,3 +65,17 @@ export interface IConsolidatorAdapter {
   getAllCollections?: () => Promise<Record<string, CollectionConsolidated>>;
   getAllBases?: () => Promise<Record<string, BaseConsolidated>>;
 }
+
+export interface IRmrkExtensionHandler {
+  /**
+   * Extension's prefix (e.g., RMRKDAO)
+   */
+  prefix: string
+
+  /**
+   * Process remark
+   * @param remark {Remark} Remark to process
+   * @return {Promise<any>}
+   */
+   processRemark(remark: Remark): Promise<any>
+}
