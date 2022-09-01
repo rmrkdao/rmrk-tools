@@ -79,8 +79,10 @@ const consolidate = async () => {
 
   await con.consolidate(remarks);
   const ret = await con.getResults()
+  // Optimisation: return last 500 invalid items
+  ret.invalid = ret.invalid.slice(ret.invalid.length - 500);
 
-  //@ts-ignore
+  // @ts-ignore
   BigInt.prototype.toJSON = function () {
     return this.toString();
   };
