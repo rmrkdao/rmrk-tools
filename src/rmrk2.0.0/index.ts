@@ -47,3 +47,4 @@ export * from "./tools/validate-remark";
 export * from "./tools/validate-metadata";
 export * from "./tools/consolidator/utils";
 export * from "./tools/types";
+export * from "./tools/get-polkadot-api-with-reconnect";
