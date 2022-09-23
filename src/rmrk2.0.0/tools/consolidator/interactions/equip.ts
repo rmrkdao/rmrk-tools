@@ -64,14 +64,6 @@ export const equipInteraction = async (
 
   if (equipEntity.baseslot === "") {
     child.equipped = "";
-    parentNft.addChange({
-      field: "equip",
-      old: equipEntity.id,
-      new: null,
-      caller: remark.caller,
-      block: remark.block,
-      opType: OP_TYPES.EQUIP,
-    });
   }
 
   if (equipEntity.baseslot) {
@@ -133,13 +125,5 @@ export const equipInteraction = async (
     }
 
     child.equipped = equipEntity.baseslot;
-    parentNft.addChange({
-      field: "equip",
-      old: null,
-      new: equipEntity.id,
-      caller: remark.caller,
-      block: remark.block,
-      opType: OP_TYPES.EQUIP,
-    });
   }
 };
