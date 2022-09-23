@@ -29,8 +29,10 @@ describe("rmrk2.0.0 Consolidator: EQUIPPABLE", () => {
         })
       ),
     ]);
-    const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+   const consolidator = new Consolidator();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Remove new Collection id to Base slot equippable", async () => {
@@ -44,8 +46,10 @@ describe("rmrk2.0.0 Consolidator: EQUIPPABLE", () => {
         })
       ),
     ]);
-    const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+   const consolidator = new Consolidator();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Replace a Collection id to Base slot equippable", async () => {
@@ -60,7 +64,9 @@ describe("rmrk2.0.0 Consolidator: EQUIPPABLE", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should invalidate EQUIPPABLE if base parts slot is missing", async () => {
@@ -75,7 +81,8 @@ describe("rmrk2.0.0 Consolidator: EQUIPPABLE", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult.invalid[0].message).toEqual(
       "[EQUIPPABLE] Attempting to change equippable on non-existant part with a slot id test"
     );
@@ -93,7 +100,8 @@ describe("rmrk2.0.0 Consolidator: EQUIPPABLE", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult.invalid[0].message).toEqual(
       "[EQUIPPABLE] Attempting to change equippable on non-existant NFT base-5-KBASE777"
     );

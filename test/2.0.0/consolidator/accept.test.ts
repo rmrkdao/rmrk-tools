@@ -33,7 +33,8 @@ describe("rmrk2.0.0 Consolidator: ACCEPT", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults()
     expect(
       consolidatedResult.nfts[mintNftMock(3).getId()].resources[0].pending
     ).toBeFalsy();
@@ -61,7 +62,8 @@ describe("rmrk2.0.0 Consolidator: ACCEPT", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults()
     expect(
       consolidatedResult.nfts[mintNftMock(3).getId()].resources[0].pending
     ).toBeFalsy();
@@ -84,7 +86,8 @@ describe("rmrk2.0.0 Consolidator: ACCEPT", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -97,7 +100,9 @@ describe("rmrk2.0.0 Consolidator: ACCEPT", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should invalidate accept if NFT is burned", async () => {
@@ -110,6 +115,8 @@ describe("rmrk2.0.0 Consolidator: ACCEPT", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 });

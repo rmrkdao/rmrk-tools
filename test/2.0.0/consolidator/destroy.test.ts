@@ -28,7 +28,9 @@ describe("rmrk2.0.0 Consolidator: DESTROY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should not DESTROY a Collection if it has unburned nft", async () => {
@@ -40,6 +42,8 @@ describe("rmrk2.0.0 Consolidator: DESTROY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 });

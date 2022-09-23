@@ -16,6 +16,8 @@ describe("rmrk2.0.0 Consolidator: CREATE BASE", () => {
       getBlockCallsMock(createBaseMock().base())
     );
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 });

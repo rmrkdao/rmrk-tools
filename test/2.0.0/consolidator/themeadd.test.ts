@@ -31,7 +31,8 @@ describe("rmrk2.0.0 Consolidator: THEMEADD", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult).toMatchSnapshot();
   });
 

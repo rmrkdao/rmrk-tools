@@ -26,7 +26,9 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock(3).list(BigInt(1e12))),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent to LIST if parent is forsale", async () => {
@@ -37,7 +39,9 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock2(4).list(BigInt(1e12))),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent to LIST non-existent NFT", async () => {
@@ -45,7 +49,9 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock(3).list(BigInt(1e12))),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent to LIST burned NFT", async () => {
@@ -55,7 +61,9 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock(3).list(BigInt(1e12))),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent to LIST non-owned NFT", async () => {
@@ -67,7 +75,9 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent to LIST NFT owned by another NFT", async () => {
@@ -77,7 +87,9 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock2(4).list(BigInt(1e12))),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent to RE-LIST NFT within 5 blocks", async () => {
@@ -87,7 +99,9 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock(3).list(BigInt(2e12))),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should invalidate LIST after transferable block number passed with negative transfer value", async () => {
@@ -98,7 +112,8 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock(3).list(BigInt(1e12))),
     ]);
     const consolidator = new Consolidator();
-    const consolidated = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidated = await consolidator.getResults()
     expect(consolidated.invalid[0].message).toEqual(
       "[LIST] Attempting to LIST non-transferable NFT 3-d43593c715a56da27d-KANARIABIRDS-KANR-00000777. It was transferable until block 4 but tx made at block 5"
     );
@@ -118,7 +133,9 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock(3).list(BigInt(0))),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should allow LIST until transferable block number reached with negative transfer value", async () => {
@@ -128,7 +145,9 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock(3).list(BigInt(1e12))),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should allow DE-LIST before transferable block number reached with negative transfer value", async () => {
@@ -145,7 +164,9 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock(3).list(BigInt(0))),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should invalidate LIST before transferable block number reached with positive transfer value", async () => {
@@ -155,7 +176,8 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock(3).list(BigInt(1e12))),
     ]);
     const consolidator = new Consolidator();
-    const consolidated = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidated = await consolidator.getResults()
     expect(consolidated.invalid[0].message).toEqual(
       "[LIST] Attempting to LIST non-transferable NFT 3-d43593c715a56da27d-KANARIABIRDS-KANR-00000777. It will become transferable after block 8 but tx made at block 4"
     );
@@ -168,7 +190,9 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock(3).list(BigInt(1e12))),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should allow DE-LIST after transferable block number reached with positive transfer value", async () => {
@@ -185,6 +209,8 @@ describe("rmrk2.0.0 Consolidator: LIST", () => {
       ...getBlockCallsMock(mintNftMock(3).list(BigInt(0))),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 });

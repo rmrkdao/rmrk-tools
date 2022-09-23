@@ -27,7 +27,9 @@ describe("rmrk2.0.0 Consolidator: MINT", () => {
       ...getBlockCallsMock(mintNftMock().mint(getBobKey().address)),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should mint a NFT and make another NFT an owner", async () => {
@@ -37,7 +39,9 @@ describe("rmrk2.0.0 Consolidator: MINT", () => {
       ...getBlockCallsMock(mintNftMock().mint(mintNftMock2(4).getId())),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should not allow to mint a NFT without a calss", async () => {
@@ -45,7 +49,9 @@ describe("rmrk2.0.0 Consolidator: MINT", () => {
       ...getBlockCallsMock(mintNftMock().mint()),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should allow to mint NFT with royalties", async () => {
@@ -72,7 +78,9 @@ describe("rmrk2.0.0 Consolidator: MINT", () => {
       ...getBlockCallsMock(nft.mint()),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should not allow to mint NFT with invalid royalties", async () => {
@@ -99,7 +107,9 @@ describe("rmrk2.0.0 Consolidator: MINT", () => {
       ...getBlockCallsMock(nft.mint()),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
   
   it("Should prevent minting NFT into locked collection", async () => {
@@ -112,7 +122,8 @@ describe("rmrk2.0.0 Consolidator: MINT", () => {
       ...getBlockCallsMock(mintNftMock2().mint()),
     ]);
     const consolidator = new Consolidator();
-    const consolidated = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidated = await consolidator.getResults();
     expect(consolidated.invalid[0].message).toEqual(
       "Attempted to mint into maxed out collection d43593c715a56da27d-KANARIABIRDS"
     );

@@ -28,7 +28,9 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(mintNftMock2(4).send(mintNftMock(3).getId())),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Add new NFT as child of first NFT and then send it to different parent NFT", async () => {
@@ -39,7 +41,9 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(mintNftMock2(4).send(mintNftMock3(5).getId())),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("rootowner should be updated recursivly", async () => {
@@ -51,7 +55,8 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(mintNftMock(3).send(getBobKey().address)),
     ]);
     const consolidator = new Consolidator(2, undefined, false, true);
-    const result = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const result = await consolidator.getResults();
     expect(result).toMatchSnapshot();
   });
 
@@ -61,7 +66,9 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(mintNftMock2(4).send(getBobKey().address)),
     ]);
     const consolidator = new Consolidator(0);
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should set NFT as pending if sent from non parent owner", async () => {
@@ -74,7 +81,9 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should set NFT as pending if sent to non owned NFT", async () => {
@@ -95,7 +104,9 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ), // Send to Bob's NFT
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should invalidate SEND if recursion detected", async () => {
@@ -105,7 +116,8 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(mintNftMock2(4).send(mintNftMock3(5).getId())),
     ]);
     const consolidator = new Consolidator();
-    const consolidated = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidated = await consolidator.getResults();
     expect(consolidated.invalid[0].message).toEqual(
       "Cannot have an nft that is it's own child"
     );
@@ -117,7 +129,8 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(mintNftMock2(99).send(getBobKey().address)), // Send to Bob first
     ]);
     const consolidator = new Consolidator();
-    const consolidated = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidated = await consolidator.getResults();
     expect(consolidated.invalid[0].message).toEqual(
       "[SEND] Attempting to send non-existant NFT 99-d43593c715a56da27d-KANARIABIRDS-KANR-00000888"
     );
@@ -131,7 +144,8 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(nftMock.send(getBobKey().address)), // Send to Bob first
     ]);
     const consolidator = new Consolidator();
-    const consolidated = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidated = await consolidator.getResults();
     expect(consolidated.invalid[0].message).toEqual(
       "[SEND] Attempting to send burned NFT 4-d43593c715a56da27d-KANARIABIRDS-KANR-00000888"
     );
@@ -157,7 +171,8 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(nftMock.send(getBobKey().address)), // Send to Bob
     ]);
     const consolidator = new Consolidator();
-    const consolidated = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidated = await consolidator.getResults();
     expect(consolidated.invalid[0].message).toEqual(
       "[SEND] Attempting to send non-owned NFT 6-8eaf04151694f26a48-KANARIAGEMS-KANR-00000999, real owner: FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP"
     );
@@ -170,7 +185,8 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(nftMock.send(mintNftMock(5).getId())),
     ]);
     const consolidator = new Consolidator();
-    const consolidated = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidated = await consolidator.getResults();
     expect(consolidated.invalid[0].message).toEqual(
       "[SEND] Attempting to send NFT to a non existing NFT 5-d43593c715a56da27d-KANARIABIRDS-KANR-00000777."
     );
@@ -183,7 +199,8 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(mintNftMock(3).send(getBobKey().address)),
     ]);
     const consolidator = new Consolidator();
-    const consolidated = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidated = await consolidator.getResults();
     expect(consolidated.invalid[0].message).toEqual(
       "[SEND] Attempting to SEND non-transferable NFT 3-d43593c715a56da27d-KANARIABIRDS-KANR-00000777. It will become transferable after block 5 but tx made at block 4"
     );
@@ -197,7 +214,8 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(mintNftMock(3).send(getBobKey().address)),
     ]);
     const consolidator = new Consolidator();
-    const consolidated = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidated = await consolidator.getResults();
     expect(consolidated.invalid[0].message).toEqual(
       "[SEND] Attempting to SEND non-transferable NFT 3-d43593c715a56da27d-KANARIABIRDS-KANR-00000777. It was transferable until block 4 but tx made at block 5"
     );
@@ -211,7 +229,9 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(mintNftMock(3).send(getBobKey().address)),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should allow SEND if transferable block reached", async () => {
@@ -221,6 +241,8 @@ describe("rmrk2.0.0 Consolidator: Send NFT to other NFT", () => {
       ...getBlockCallsMock(mintNftMock(3).send(getBobKey().address)),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
+    expect(consolidatedResult).toMatchSnapshot();
   });
 });

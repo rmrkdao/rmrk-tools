@@ -114,7 +114,8 @@ describe("rmrk2.0.0 Consolidator: SETPROPERTY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult.invalid[0].message).toEqual(
       "[SETPROPERTY] Attempting to set property on a non-owned NFT. Expected FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP but received HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
     );
@@ -129,7 +130,8 @@ describe("rmrk2.0.0 Consolidator: SETPROPERTY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult.invalid[0].message).toEqual(
       "[SETPROPERTY] Attempting to mutate property without matching extra call of op type BURN"
     );
@@ -152,7 +154,8 @@ describe("rmrk2.0.0 Consolidator: SETPROPERTY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult.invalid[0].message).toEqual(
       "The op code needs to be BURN, but it is MINT"
     );
@@ -176,7 +179,8 @@ describe("rmrk2.0.0 Consolidator: SETPROPERTY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -198,7 +202,8 @@ describe("rmrk2.0.0 Consolidator: SETPROPERTY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -215,7 +220,8 @@ describe("rmrk2.0.0 Consolidator: SETPROPERTY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -231,7 +237,8 @@ describe("rmrk2.0.0 Consolidator: SETPROPERTY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult.invalid[0].message).toEqual(
       "[SETPROPERTY] Attempting to set property on immutable property test"
     );
@@ -249,7 +256,8 @@ describe("rmrk2.0.0 Consolidator: SETPROPERTY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(
       consolidatedResult.nfts[mintNftWithProperties(4).getId()].properties
         ?.royaltyInfo?.value?.royaltyPercentFloat
@@ -269,7 +277,8 @@ describe("rmrk2.0.0 Consolidator: SETPROPERTY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult.invalid[0].message).toEqual(
       "[SETPROPERTY] Only issuer can mutate an attribute of type 'royalty'."
     );
@@ -287,7 +296,8 @@ describe("rmrk2.0.0 Consolidator: SETPROPERTY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult).toMatchSnapshot();
   });
 });

@@ -25,8 +25,9 @@ describe("rmrk2.0.0 Consolidator: RESADD", () => {
         mintNftMock(3).resadd({ metadata: "ipfs://ipfs/123" })
       ),
     ]);
-    const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+        const consolidator = new Consolidator();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(
       consolidatedResult.nfts[mintNftMock(3).getId()].resources[0].pending
     ).toBeFalsy();
@@ -54,8 +55,9 @@ describe("rmrk2.0.0 Consolidator: RESADD", () => {
         )
       ),
     ]);
-    const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+        const consolidator = new Consolidator();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(
       consolidatedResult.nfts[mintNftMock(3).getId()].resources[0].pending
     ).toBeFalsy();
@@ -75,8 +77,9 @@ describe("rmrk2.0.0 Consolidator: RESADD", () => {
         getBobKey().address
       ),
     ]);
-    const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+        const consolidator = new Consolidator();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(consolidatedResult.invalid[0].message).toEqual(
       "[RESADD] Attempting to add resource to NFT in non-owned collection d43593c715a56da27d-KANARIABIRDS"
     );
@@ -90,8 +93,9 @@ describe("rmrk2.0.0 Consolidator: RESADD", () => {
         mintNftMock(3).resadd({ metadata: "ipfs://ipfs/123" })
       ),
     ]);
-    const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+        const consolidator = new Consolidator();
+    await consolidator.consolidate(remarks);
+    const consolidatedResult = await consolidator.getResults();
     expect(
       consolidatedResult.nfts[mintNftMock(3).getId()].resources[0].pending
     ).toBeTruthy();

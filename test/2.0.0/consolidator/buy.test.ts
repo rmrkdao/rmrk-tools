@@ -32,7 +32,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should allow you to BUY listed NFT for someone else", async () => {
@@ -52,7 +54,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent you from BUYing unlisted NFT", async () => {
@@ -67,7 +71,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent you from BUYing non existent NFT", async () => {
@@ -81,7 +87,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent you from BUYing burned NFT", async () => {
@@ -98,7 +106,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent you from BUYing NFT without a balance transfer", async () => {
@@ -108,7 +118,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ...getBlockCallsMock(mintNftMock(3).buy(), getBobKey().address),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent you from BUYing NFT with incorrect balance transfer", async () => {
@@ -124,7 +136,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent you from BUYing child NFT with incorrect balance transfer", async () => {
@@ -141,7 +155,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should correctly change rootowner of all child NFTs", async () => {
@@ -159,7 +175,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should correctly change rootowner when child NFT is sold", async () => {
@@ -177,7 +195,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should correctly save changes when commission is paid", async () => {
@@ -200,7 +220,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
   
   it("Should prevent BUYing NFT after transferable block passed with negative transfer value", async () => {
@@ -217,8 +239,8 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    const consolidated = await consolidator.consolidate(remarks);
-    expect(consolidated.invalid[0].message).toEqual(
+    await consolidator.consolidate(remarks);
+    expect((await consolidator.getResults()).invalid[0].message).toEqual(
       "[BUY] Attempting to BUY non-transferable NFT 3-d43593c715a56da27d-KANARIABIRDS-KANR-00000777. It was transferable until block 4 but tx made at block 5"
     );
   });
@@ -237,7 +259,9 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
   
   it("Should allow BUYing NFT after transferable block reached with positive transfer value", async () => {
@@ -254,6 +278,8 @@ describe("rmrk2.0.0 Consolidator: BUY", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 });

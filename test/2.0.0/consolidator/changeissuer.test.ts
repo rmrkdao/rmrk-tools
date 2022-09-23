@@ -29,7 +29,9 @@ describe("rmrk2.0.0 Consolidator: CHANGEISSUER", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should allow to CHANGEISSUER of base", async () => {
@@ -40,22 +42,24 @@ describe("rmrk2.0.0 Consolidator: CHANGEISSUER", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should prevent from CHANGEISSUER of non-existent base or collection", async () => {
     const consolidator = new Consolidator();
+    await consolidator.consolidate(
+      getRemarksFromBlocksMock([
+        ...getBlockCallsMock(
+          createBaseMock(3).change_issuer(getBobKey().address)
+        ),
+      ])
+    )
     expect(
-      await consolidator.consolidate(
-        getRemarksFromBlocksMock([
-          ...getBlockCallsMock(
-            createBaseMock(3).change_issuer(getBobKey().address)
-          ),
-        ])
-      )
+      await consolidator.getResults()
     ).toMatchSnapshot();
 
-    expect(
       await consolidator.consolidate(
         getRemarksFromBlocksMock([
           ...getBlockCallsMock(
@@ -63,6 +67,8 @@ describe("rmrk2.0.0 Consolidator: CHANGEISSUER", () => {
           ),
         ])
       )
+    expect(
+      await consolidator.getResults()
     ).toMatchSnapshot();
   });
 
@@ -75,6 +81,8 @@ describe("rmrk2.0.0 Consolidator: CHANGEISSUER", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 });

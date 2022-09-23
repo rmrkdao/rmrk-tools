@@ -47,7 +47,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
   it("Equip NFT on another NFT successfully", async () => {
     const remarks = getRemarksFromBlocksMock([...getSetupRemarks()]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -57,7 +58,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
       ...getBlockCallsMock(mintNftMock2(6).equip("")),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -81,7 +83,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -94,7 +97,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -106,7 +110,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
       ...getBlockCallsMock(mintNftMock(3).equip("base-test.test")),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -117,7 +122,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
       ...getBlockCallsMock(mintNftMock(3).equip("base-test.test")),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -130,7 +136,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
       ...getBlockCallsMock(mintNftMock(3).equip("base-test.test")),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -153,7 +160,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -169,7 +177,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
       ),
     ]);
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -199,7 +208,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
     ]);
 
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -228,7 +238,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
     ]);
 
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -264,7 +275,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
     ]);
 
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 
@@ -298,7 +310,8 @@ describe("rmrk2.0.0 Consolidator: EQUIP", () => {
     ]);
 
     const consolidator = new Consolidator();
-    const consolidatedResult = await consolidator.consolidate(remarks);
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
     expect(consolidatedResult).toMatchSnapshot();
   });
 });

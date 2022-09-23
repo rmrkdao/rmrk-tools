@@ -33,7 +33,9 @@ describe("rmrk2.0.0 Consolidator: BURN", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should BURN an nft and it's children", async () => {
@@ -49,7 +51,9 @@ describe("rmrk2.0.0 Consolidator: BURN", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 
   it("Should unequip BURNed nft from parent's children array", async () => {
@@ -66,6 +70,8 @@ describe("rmrk2.0.0 Consolidator: BURN", () => {
       ]),
     ]);
     const consolidator = new Consolidator();
-    expect(await consolidator.consolidate(remarks)).toMatchSnapshot();
+    await consolidator.consolidate(remarks)
+    const consolidatedResult = await consolidator.getResults()
+    expect(consolidatedResult).toMatchSnapshot();
   });
 });
